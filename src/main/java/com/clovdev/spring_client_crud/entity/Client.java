@@ -1,12 +1,11 @@
 package com.clovdev.spring_client_crud.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-
+//to do : usage of lombok
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Client {
@@ -20,15 +19,6 @@ public class Client {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
-
-
-
-
-
-
-
-
-
 
 
 
