@@ -8,11 +8,11 @@ import com.clovdev.spring_client_crud.mapper.ClientMapper;
 import com.clovdev.spring_client_crud.repository.ClientRepository;
 import com.clovdev.spring_client_crud.service.ClientService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -35,10 +35,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientResponseDTO update(ClientRequestDTO clientRequestDTO, Long id) {
+    public void update(ClientRequestDTO clientRequestDTO, Long id) {
         var clientToUpdate = findById(id);
         BeanUtils.copyProperties(clientRequestDTO, clientToUpdate);
-        return clientMapper.entityToDto(clientRepository.save(clientToUpdate));
+                  clientRepository.save(clientToUpdate);
 
     }
 
@@ -54,9 +54,10 @@ public class ClientServiceImpl implements ClientService {
                 new NoSuchElementException(format("Client not found with id %d", id)));
     }
 
+
     @Override
-    public Set<ClientResponseDTO> getAll() {
-        Set<Client> clients = clientRepository.findAll();
-        return clients.stream().map(clientMapper::entityToDto).collect(Collectors.toSet()) ;
+    public Page<ClientResponseDTO> findAll(Pageable pageable) {
+        Page<Client> clients = clientRepository.findAll(pageable);
+        return clients.map(clientMapper::entityToDto);
     }
 }

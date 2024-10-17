@@ -5,11 +5,15 @@ import com.clovdev.spring_client_crud.client.ClientResponseDTO;
 import com.clovdev.spring_client_crud.mapper.ClientMapper;
 import com.clovdev.spring_client_crud.service.ClientService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("api/v1/clients")
@@ -35,8 +39,9 @@ public class ClientController {
         return ResponseEntity.ok(clientMapper.entityToDto(client));
     }
     @GetMapping
-    ResponseEntity<Set<ClientResponseDTO>> findAll() {
-        return ResponseEntity.ok(clientService.getAll());
+    ResponseEntity<Page<ClientResponseDTO>> findAll(@RequestParam Optional<Integer> page,Optional<Integer> size) {
+
+        return ResponseEntity.ok(clientService.findAll(PageRequest.of(page.orElse(0), size.orElse(10))));
     }
 
     @DeleteMapping("/{clientId}")
@@ -45,8 +50,9 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
     @PutMapping("/{clientId}")
-    ResponseEntity<ClientResponseDTO> update(@RequestBody ClientRequestDTO clientRequestDTO, @PathVariable Long clientId) {;
-        return ResponseEntity.ok(clientService.update(clientRequestDTO, clientId));
+    ResponseEntity<Void> update(@RequestBody ClientRequestDTO clientRequestDTO, @PathVariable Long clientId) {
+        clientService.update(clientRequestDTO, clientId);
+        return ResponseEntity.ok(null);
     }
 
 
