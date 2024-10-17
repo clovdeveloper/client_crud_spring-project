@@ -1,12 +1,19 @@
 package com.clovdev.spring_client_crud.client;
 
-import org.springframework.lang.NonNull;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public record ClientRequestDTO(
-        @NonNull
+
+        @NotEmpty
+        @NotNull
         String name,
-        @NonNull
+        @Email
         String email,
+        @NotEmpty
+        @NotNull
         String phone,
         String address
 ) {

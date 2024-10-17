@@ -4,6 +4,7 @@ import com.clovdev.spring_client_crud.client.ClientRequestDTO;
 import com.clovdev.spring_client_crud.client.ClientResponseDTO;
 import com.clovdev.spring_client_crud.mapper.ClientMapper;
 import com.clovdev.spring_client_crud.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class ClientController {
     }
 
     @PostMapping
-    ResponseEntity<ClientResponseDTO> create(@RequestBody ClientRequestDTO clientRequestDTO) {
+    ResponseEntity<ClientResponseDTO> create(@RequestBody @Valid ClientRequestDTO clientRequestDTO) {
         var createdClient = clientService.save(clientRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdClient);
     }
