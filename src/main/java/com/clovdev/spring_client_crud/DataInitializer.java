@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 public class DataInitializer {
 
     @Bean
-    public CommandLineRunner loadData(ClientRepository clientRepository) {
+    public CommandLineRunner saveClient(ClientRepository clientRepository) {
         return args -> {
             var client = new Client();
             client.setName("clovdev");
             client.setEmail("clovdev@gmail.com");
+
             client.setPhone("+25761482930");
             client.setAddress("Buja-Ntahangwa");
 
