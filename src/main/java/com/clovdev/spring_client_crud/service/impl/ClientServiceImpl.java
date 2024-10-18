@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client findById(Long id) {
         return clientRepository.findById(id).orElseThrow(()->
-                new NoSuchElementException(format("Client not found with id %d", id)));
+                new NoSuchElementException(format("Client with id = %d not found", id)));
     }
 
 

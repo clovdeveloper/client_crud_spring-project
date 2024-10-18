@@ -39,7 +39,7 @@ public class ClientController {
         return ResponseEntity.ok(clientMapper.entityToDto(client));
     }
     @GetMapping
-    ResponseEntity<Page<ClientResponseDTO>> findAll(@RequestParam Optional<Integer> page,Optional<Integer> size) {
+    ResponseEntity<Page<ClientResponseDTO>> findAll(@RequestParam Optional<Integer> page,@RequestParam Optional<Integer> size) {
 
         return ResponseEntity.ok(clientService.findAll(PageRequest.of(page.orElse(0), size.orElse(10))));
     }
